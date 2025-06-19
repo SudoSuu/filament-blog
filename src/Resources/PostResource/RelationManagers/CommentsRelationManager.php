@@ -12,11 +12,16 @@ class CommentsRelationManager extends RelationManager
 {
   protected static string $relationship = 'comments';
 
+
+  protected static ?string $recordTitleAttribute = 'comment';
+  protected static ?string $title = 'التعليقات';
+
   public function form(Form $form): Form
   {
     return $form
       ->schema([
         Forms\Components\TextInput::make('comment')
+          ->label('التعليق')
           ->required()
           ->maxLength(255),
       ]);
@@ -27,22 +32,26 @@ class CommentsRelationManager extends RelationManager
     return $table
       ->recordTitleAttribute('comment')
       ->columns([
-        Tables\Columns\TextColumn::make('comment')->limit(20),
-        Tables\Columns\TextColumn::make('user.name'),
+        Tables\Columns\TextColumn::make('comment')
+          ->label('التعليق')
+          ->limit(20),
+
+        Tables\Columns\TextColumn::make('user.name')
+          ->label('المستخدم'),
       ])
       ->filters([
-        //
+        // فلاتر يمكن إضافتها لاحقًا
       ])
       ->headerActions([
-        Tables\Actions\CreateAction::make(),
+        Tables\Actions\CreateAction::make()->label('إضافة'),
       ])
       ->actions([
-        Tables\Actions\EditAction::make(),
-        Tables\Actions\DeleteAction::make(),
+        Tables\Actions\EditAction::make()->label('تعديل'),
+        Tables\Actions\DeleteAction::make()->label('حذف'),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }

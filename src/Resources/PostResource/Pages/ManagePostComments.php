@@ -27,20 +27,19 @@ class ManagePostComments extends ManageRelatedRecords
   public function getTitle(): string|Htmlable
   {
     $recordTitle = $this->getRecordTitle();
-
     $recordTitle = $recordTitle instanceof Htmlable ? $recordTitle->toHtml() : $recordTitle;
 
-    return 'Manage Comments';
+    return 'إدارة التعليقات';
   }
 
   public function getBreadcrumb(): string
   {
-    return 'Comments';
+    return 'التعليقات';
   }
 
   public static function getNavigationLabel(): string
   {
-    return 'Manage Comments';
+    return 'إدارة التعليقات';
   }
 
   public function form(Form $form): Form
@@ -48,13 +47,18 @@ class ManagePostComments extends ManageRelatedRecords
     return $form
       ->schema([
         Select::make('user_id')
+          ->label('المستخدم')
           ->relationship('user', config('filamentblog.user.columns.name'))
           ->required(),
+
         Textarea::make('comment')
+          ->label('التعليق')
           ->required()
           ->maxLength(65535)
           ->columnSpanFull(),
-        Toggle::make('approved'),
+
+        Toggle::make('approved')
+          ->label('تمت الموافقة'),
       ])
       ->columns(1);
   }
@@ -64,52 +68,57 @@ class ManagePostComments extends ManageRelatedRecords
     return $table
       ->columns([
         Tables\Columns\TextColumn::make('comment')
+          ->label('التعليق')
           ->searchable(),
-        UserPhotoName::make('user')
-          ->label('Commented By'),
-        Tables\Columns\ToggleColumn::make('approved')
-          ->beforeStateUpdated(function ($record, $state) {
-            if ($state) {
-              $record->approved_at = now();
-            } else {
-              $record->approved_at = null;
-            }
 
+        UserPhotoName::make('user')
+          ->label('تم التعليق بواسطة'),
+
+        Tables\Columns\ToggleColumn::make('approved')
+          ->label('تمت الموافقة')
+          ->beforeStateUpdated(function ($record, $state) {
+            $record->approved_at = $state ? now() : null;
             return $state;
           }),
+
         Tables\Columns\TextColumn::make('approved_at')
-          ->placeholder('Not approved')
+          ->label('تاريخ الموافقة')
+          ->placeholder('لم تتم الموافقة')
           ->sortable(),
 
         Tables\Columns\TextColumn::make('created_at')
+          ->label('تاريخ الإنشاء')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
+
         Tables\Columns\TextColumn::make('updated_at')
+          ->label('تاريخ التعديل')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
       ->filters([
         Tables\Filters\SelectFilter::make('user')
+          ->label('المستخدم')
           ->relationship('user', config('filamentblog.user.columns.name'))
           ->searchable()
           ->preload()
           ->multiple(),
       ])
       ->headerActions([
-        Tables\Actions\CreateAction::make(),
+        Tables\Actions\CreateAction::make()->label('إضافة'),
       ])
       ->actions([
         Tables\Actions\ActionGroup::make([
-          Tables\Actions\EditAction::make(),
-          Tables\Actions\ViewAction::make(),
-          Tables\Actions\DeleteAction::make(),
+          Tables\Actions\EditAction::make()->label('تعديل'),
+          Tables\Actions\ViewAction::make()->label('عرض'),
+          Tables\Actions\DeleteAction::make()->label('حذف'),
         ]),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }
@@ -117,14 +126,12 @@ class ManagePostComments extends ManageRelatedRecords
   public function infolist(Infolist $infolist): Infolist
   {
     return $infolist->schema([
-      Section::make('Comment')
+      Section::make('التعليق')
         ->schema([
-          TextEntry::make('user.name')
-            ->label('Commented by'),
-          TextEntry::make('comment'),
-          TextEntry::make('created_at'),
-          TextEntry::make('approved_at')->label('Approved At')->placeholder('Not Approved'),
-
+          TextEntry::make('user.name')->label('تم التعليق بواسطة'),
+          TextEntry::make('comment')->label('النص'),
+          TextEntry::make('created_at')->label('تاريخ الإنشاء'),
+          TextEntry::make('approved_at')->label('تاريخ الموافقة')->placeholder('لم تتم الموافقة'),
         ])
         ->icon('heroicon-o-chat-bubble-left-ellipsis'),
     ]);

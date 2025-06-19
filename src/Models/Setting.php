@@ -54,69 +54,95 @@ class Setting extends Model
   public static function getForm(): array
   {
     return [
-      Section::make('General Information')
+      Section::make('معلومات عامة')
         ->schema([
           TextInput::make('title')
+            ->label('عنوان الموقع')
             ->maxLength(155)
             ->required(),
+
           TextInput::make('organization_name')
+            ->label('اسم المؤسسة')
             ->required()
             ->maxLength(155)
             ->minLength(3),
+
           Textarea::make('description')
+            ->label('الوصف')
             ->required()
             ->minLength(10)
             ->maxLength(1000)
             ->columnSpanFull(),
+
           FileUpload::make('logo')
-            ->hint('Max height 400')
+            ->label('شعار الموقع')
+            ->hint('أقصى ارتفاع 400 بكسل')
             ->directory('setting/logo')
             ->maxSize(1024 * 1024 * 2)
             ->rules('dimensions:max_height=400')
-            ->nullable()->columnSpanFull(),
+            ->nullable()
+            ->columnSpanFull(),
+
           FileUpload::make('favicon')
+            ->label('أيقونة الموقع (Favicon)')
             ->directory('setting/favicon')
             ->maxSize(50)
-            ->nullable()->columnSpanFull()
-        ])->columns(2),
+            ->nullable()
+            ->columnSpanFull(),
+        ])
+        ->columns(2),
 
-      Section::make('SEO')
-        ->description('Place your google analytic and adsense code here. This will be added to the head tag of your blog post only.')
+      Section::make('إعدادات SEO')
+        ->description('ضع كود تحليلات Google وAdSense هنا. سيتم إضافته في وسم <head> لصفحات المقالات فقط.')
         ->schema([
           Textarea::make('google_console_code')
+            ->label('كود Google Console')
             ->startsWith('<meta')
+            ->placeholder('مثال: <meta name="google-site-verification" content="your_verification_code" />')
             ->nullable()
             ->columnSpanFull(),
+
           Textarea::make('google_analytic_code')
+            ->label('كود Google Analytics')
+            ->placeholder('مثال: <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>')
             ->startsWith('<script')
             ->endsWith('</script>')
             ->nullable()
             ->columnSpanFull(),
-          Textarea::make('google_adsense_code')
-            ->startsWith('<script')
-            ->endsWith('</script>')
-            ->nullable()
-            ->columnSpanFull(),
-        ])->columns(2),
-      Section::make('Quick Links')
-        ->description('Add your quick links here. This will be displayed in the footer of your blog.')
+
+          // Textarea::make('google_adsense_code')
+          //   ->label('كود Google AdSense')
+          //   ->startsWith('<script')
+          //   ->endsWith('</script>')
+          //   ->nullable()
+          //   ->columnSpanFull(),
+        ])
+        ->columns(2),
+
+      Section::make('روابط سريعة')
+        ->description('أضف روابطك السريعة هنا، ستظهر في تذييل الموقع.')
         ->schema([
           Repeater::make('quick_links')
-            ->label('Links')
+            ->label('روابط')
             ->schema([
               TextInput::make('label')
+                ->label('اسم الرابط')
                 ->required()
                 ->maxLength(155),
+
               TextInput::make('url')
-                ->label('URL')
-                ->helperText('URL should start with http:// or https://')
+                ->label('الرابط (URL)')
+                ->helperText('يجب أن يبدأ الرابط بـ http:// أو https://')
                 ->required()
                 ->url()
                 ->maxLength(255),
-            ])->columns(2),
-        ])->columnSpanFull(),
+            ])
+            ->columns(2),
+        ])
+        ->columnSpanFull(),
     ];
   }
+
 
   public function getTable()
   {

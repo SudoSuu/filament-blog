@@ -22,17 +22,15 @@ class ManaePostSeoDetail extends ManageRelatedRecords
 
   public function getTitle(): string|Htmlable
   {
-
     $recordTitle = $this->getRecordTitle();
-
     $recordTitle = $recordTitle instanceof Htmlable ? $recordTitle->toHtml() : $recordTitle;
 
-    return 'Manage Seo Detail';
+    return 'إدارة بيانات SEO';
   }
 
   public static function getNavigationLabel(): string
   {
-    return 'Manage Seo Detail';
+    return 'إدارة بيانات SEO';
   }
 
   protected function canCreate(): bool
@@ -45,12 +43,17 @@ class ManaePostSeoDetail extends ManageRelatedRecords
     return $form
       ->schema([
         TextInput::make('title')
+          ->label('عنوان السيو')
           ->required()
           ->maxLength(255)
           ->columnSpanFull(),
+
         TagsInput::make('keywords')
+          ->label('الكلمات المفتاحية')
           ->columnSpanFull(),
+
         Textarea::make('description')
+          ->label('الوصف')
           ->required()
           ->maxLength(65535)
           ->columnSpanFull(),
@@ -63,26 +66,37 @@ class ManaePostSeoDetail extends ManageRelatedRecords
       ->recordTitleAttribute('title')
       ->columns([
         Tables\Columns\TextColumn::make('title')
+          ->label('عنوان السيو')
           ->limit(20),
+
         Tables\Columns\TextColumn::make('description')
+          ->label('الوصف')
           ->limit(40),
-        Tables\Columns\TextColumn::make('keywords')->badge(),
+
+        Tables\Columns\TextColumn::make('keywords')
+          ->label('الكلمات المفتاحية')
+          ->badge(),
+
         Tables\Columns\TextColumn::make('created_at')
+          ->label('تاريخ الإنشاء')
           ->dateTime()
           ->toggleable(isToggledHiddenByDefault: true),
+
         Tables\Columns\TextColumn::make('updated_at')
+          ->label('تاريخ التعديل')
           ->dateTime()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
       ->filters([
-        //
+        // يمكن إضافة فلاتر لاحقاً
       ])
       ->headerActions([
-        Tables\Actions\CreateAction::make(),
+        Tables\Actions\CreateAction::make()->label('إضافة'),
       ])
       ->actions([
-        Tables\Actions\EditAction::make(),
-        Tables\Actions\ViewAction::make(),
-      ])->paginated(false);
+        Tables\Actions\EditAction::make()->label('تعديل'),
+        Tables\Actions\ViewAction::make()->label('عرض'),
+      ])
+      ->paginated(false);
   }
 }

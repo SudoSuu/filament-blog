@@ -10,9 +10,9 @@ class BlogPostPublishedChart extends BaseWidget
   protected function getStats(): array
   {
     return [
-      BaseWidget\Stat::make('Published Post', Post::published()->count()),
-      BaseWidget\Stat::make('Scheduled Post', Post::scheduled()->count()),
-      BaseWidget\Stat::make('Pending Post', Post::pending()->count()),
+      BaseWidget\Stat::make('المقالات المنشورة', Post::published()->count()),
+      BaseWidget\Stat::make('المقالات المجدولة', Post::scheduled()->count()),
+      BaseWidget\Stat::make('المقالات مسودة ', Post::pending()->count()),
     ];
   }
 }

@@ -14,14 +14,16 @@ class TagResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-  protected static ?string $navigationGroup = 'Blog';
+  protected static ?string $navigationGroup = 'مدونة';
 
   protected static ?int $navigationSort = 2;
 
+  protected static ?string $label = 'وسم';
+  protected static ?string $pluralLabel = 'الوسوم';
+
   public static function form(Form $form): Form
   {
-    return $form
-      ->schema(Tag::getForm());
+    return $form->schema(Tag::getForm());
   }
 
   public static function table(Table $table): Table
@@ -29,39 +31,42 @@ class TagResource extends Resource
     return $table
       ->columns([
         Tables\Columns\TextColumn::make('name')
+          ->label('الاسم')
           ->searchable(),
-        Tables\Columns\TextColumn::make('slug'),
+
+        Tables\Columns\TextColumn::make('slug')
+          ->label('الرابط'),
 
         Tables\Columns\TextColumn::make('created_at')
+          ->label('تاريخ الإنشاء')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
 
         Tables\Columns\TextColumn::make('updated_at')
+          ->label('تاريخ التعديل')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
       ->filters([
-        //
+        // فلاتر يمكن إضافتها لاحقاً
       ])
       ->actions([
-        Tables\Actions\EditAction::make(),
-        Tables\Actions\DeleteAction::make(),
-        Tables\Actions\ViewAction::make(),
+        Tables\Actions\EditAction::make()->label('تعديل'),
+        Tables\Actions\DeleteAction::make()->label('حذف'),
+        Tables\Actions\ViewAction::make()->label('عرض'),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }
 
   public static function getRelations(): array
   {
-    return [
-      //
-    ];
+    return [];
   }
 
   public static function getPages(): array

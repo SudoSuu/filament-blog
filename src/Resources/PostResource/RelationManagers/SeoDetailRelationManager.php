@@ -12,6 +12,9 @@ class SeoDetailRelationManager extends RelationManager
 {
   protected static string $relationship = 'seoDetail';
 
+  protected static ?string $recordTitleAttribute = 'title';
+  protected static ?string $title = 'تفاصيل السيو';
+
   public function form(Form $form): Form
   {
     return $form
@@ -23,23 +26,32 @@ class SeoDetailRelationManager extends RelationManager
     return $table
       ->recordTitleAttribute('title')
       ->columns([
-        Tables\Columns\TextColumn::make('title'),
-        Tables\Columns\TextColumn::make('description'),
-        Tables\Columns\TextColumn::make('keywords')->badge(),
+        Tables\Columns\TextColumn::make('title')
+          ->label('عنوان السيو'),
+
+        Tables\Columns\TextColumn::make('description')
+          ->label('الوصف'),
+
+        Tables\Columns\TextColumn::make('keywords')
+          ->label('الكلمات المفتاحية')
+          ->badge(),
       ])
       ->filters([
-        //
+        // فلاتر مستقبلية
       ])
       ->headerActions([
-        Tables\Actions\CreateAction::make(),
+        Tables\Actions\CreateAction::make()->label('إضافة'),
       ])
       ->actions([
-        Tables\Actions\EditAction::make()->slideOver(),
-        Tables\Actions\DeleteAction::make(),
+        Tables\Actions\EditAction::make()
+          ->label('تعديل')
+          ->slideOver(),
+
+        Tables\Actions\DeleteAction::make()->label('حذف'),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }

@@ -70,6 +70,7 @@ class SeoDetail extends Model
   {
     return [
       Select::make('post_id')
+        ->label('المقال المرتبط')
         ->createOptionForm(Post::getForm())
         ->editOptionForm(Post::getForm())
         ->relationship('post', 'title')
@@ -79,18 +80,25 @@ class SeoDetail extends Model
         ->searchable()
         ->default(request('post_id') ?? '')
         ->columnSpanFull(),
+
       TextInput::make('title')
+        ->label('عنوان السيو')
         ->required()
         ->maxLength(255)
         ->columnSpanFull(),
+
       TagsInput::make('keywords')
+        ->label('الكلمات المفتاحية')
         ->columnSpanFull(),
+
       Textarea::make('description')
+        ->label('الوصف')
         ->required()
         ->maxLength(65535)
         ->columnSpanFull(),
     ];
   }
+
 
   protected static function newFactory()
   {

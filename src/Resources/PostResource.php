@@ -28,11 +28,14 @@ class PostResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-document-minus';
 
-  protected static ?string $navigationGroup = 'Blog';
+  protected static ?string $navigationGroup = 'مدونة';
 
   protected static ?string $recordTitleAttribute = 'title';
 
   protected static ?int $navigationSort = 3;
+
+  protected static ?string $label = 'مقال';
+  protected static ?string $pluralLabel = 'المقالات';
 
   protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
@@ -43,8 +46,7 @@ class PostResource extends Resource
 
   public static function form(Form $form): Form
   {
-    return $form
-      ->schema(Post::getForm());
+    return $form->schema(Post::getForm());
   }
 
   public static function table(Table $table): Table
@@ -53,31 +55,38 @@ class PostResource extends Resource
       ->deferLoading()
       ->columns([
         Tables\Columns\TextColumn::make('title')
-          ->description(function (Post $record) {
-            return Str::limit($record->sub_title, 40);
-          })
-          ->searchable()->limit(20),
+          ->label('العنوان')
+          ->description(fn(Post $record) => Str::limit($record->sub_title, 40))
+          ->searchable()
+          ->limit(20),
+
         Tables\Columns\TextColumn::make('status')
+          ->label('الحالة')
           ->badge()
-          ->color(function ($state) {
-            return $state->getColor();
-          }),
-        Tables\Columns\ImageColumn::make('cover_photo_path')->label('Cover Photo'),
+          ->color(fn($state) => $state->getColor()),
+
+        Tables\Columns\ImageColumn::make('cover_photo_path')
+          ->label('صورة الغلاف'),
 
         UserPhotoName::make('user')
-          ->label('Author'),
+          ->label('الكاتب'),
 
         Tables\Columns\TextColumn::make('created_at')
+          ->label('تاريخ الإنشاء')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
+
         Tables\Columns\TextColumn::make('updated_at')
+          ->label('تاريخ التعديل')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
-      ])->defaultSort('id', 'desc')
+      ])
+      ->defaultSort('id', 'desc')
       ->filters([
         Tables\Filters\SelectFilter::make('user')
+          ->label('الكاتب')
           ->relationship('user', config('filamentblog.user.columns.name'))
           ->searchable()
           ->preload()
@@ -85,13 +94,13 @@ class PostResource extends Resource
       ])
       ->actions([
         Tables\Actions\ActionGroup::make([
-          Tables\Actions\EditAction::make(),
-          Tables\Actions\ViewAction::make(),
+          Tables\Actions\EditAction::make()->label('تعديل'),
+          Tables\Actions\ViewAction::make()->label('عرض'),
         ]),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }
@@ -99,31 +108,35 @@ class PostResource extends Resource
   public static function infolist(Infolist $infolist): Infolist
   {
     return $infolist->schema([
-      Section::make('Post')
+      Section::make('المقال')
         ->schema([
-          Fieldset::make('General')
+          Fieldset::make('عام')
             ->schema([
-              TextEntry::make('title'),
-              TextEntry::make('slug'),
-              TextEntry::make('sub_title'),
+              TextEntry::make('title')->label('العنوان'),
+              TextEntry::make('slug')->label('الرابط'),
+              TextEntry::make('sub_title')->label('العنوان الفرعي'),
             ]),
-          Fieldset::make('Publish Information')
+
+          Fieldset::make('معلومات النشر')
             ->schema([
               TextEntry::make('status')
-                ->badge()->color(function ($state) {
-                  return $state->getColor();
-                }),
-              TextEntry::make('published_at')->visible(function (Post $record) {
-                return $record->status === PostStatus::PUBLISHED;
-              }),
+                ->label('الحالة')
+                ->badge()
+                ->color(fn($state) => $state->getColor()),
 
-              TextEntry::make('scheduled_for')->visible(function (Post $record) {
-                return $record->status === PostStatus::SCHEDULED;
-              }),
+              TextEntry::make('published_at')
+                ->label('تاريخ النشر')
+                ->visible(fn(Post $record) => $record->status === PostStatus::PUBLISHED),
+
+              TextEntry::make('scheduled_for')
+                ->label('تاريخ المجدولة')
+                ->visible(fn(Post $record) => $record->status === PostStatus::SCHEDULED),
             ]),
-          Fieldset::make('Description')
+
+          Fieldset::make('الوصف')
             ->schema([
               TextEntry::make('body')
+                ->label('المحتوى')
                 ->html()
                 ->columnSpanFull(),
             ]),
@@ -144,8 +157,7 @@ class PostResource extends Resource
   public static function getRelations(): array
   {
     return [
-      //            \SudoSuu\FilamentBlog\Resources\PostResource\RelationManagers\SeoDetailRelationManager::class,
-      //            \SudoSuu\FilamentBlog\Resources\PostResource\RelationManagers\CommentsRelationManager::class,
+      // علاقات مستقبلية مثل التعليقات أو بيانات السيو
     ];
   }
 

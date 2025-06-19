@@ -26,7 +26,7 @@ class Blog implements Plugin
       Resources\SeoDetailResource::class,
         // Resources\NewsletterResource::class,
       Resources\CommentResource::class,
-      Resources\ShareSnippetResource::class,
+        // Resources\ShareSnippetResource::class,
       Resources\SettingResource::class,
     ]);
   }

@@ -14,14 +14,16 @@ class SettingResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-  protected static ?string $navigationGroup = 'Blog';
+  protected static ?string $navigationGroup = 'مدونة';
 
   protected static ?int $navigationSort = 8;
 
+  protected static ?string $label = 'إعداد';
+  protected static ?string $pluralLabel = 'الإعدادات';
+
   public static function form(Form $form): Form
   {
-    return $form
-      ->schema(Setting::getForm());
+    return $form->schema(Setting::getForm());
   }
 
   public static function canCreate(): bool
@@ -34,44 +36,50 @@ class SettingResource extends Resource
     return $table
       ->columns([
         Tables\Columns\TextColumn::make('title')
+          ->label('العنوان')
           ->limit(25)
           ->searchable(),
+
         Tables\Columns\TextColumn::make('description')
+          ->label('الوصف')
           ->limit(30)
           ->searchable(),
 
-        Tables\Columns\ImageColumn::make('logo'),
+        Tables\Columns\ImageColumn::make('logo')
+          ->label('الشعار'),
 
-        Tables\Columns\TextColumn::make('organization_name'),
+        Tables\Columns\TextColumn::make('organization_name')
+          ->label('اسم المؤسسة'),
 
         Tables\Columns\TextColumn::make('created_at')
+          ->label('تاريخ الإنشاء')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
+
         Tables\Columns\TextColumn::make('updated_at')
+          ->label('تاريخ التعديل')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
       ->filters([
-        //
+        // يمكن إضافة فلاتر لاحقاً
       ])
       ->actions([
-        Tables\Actions\EditAction::make(),
-        Tables\Actions\ViewAction::make(),
+        Tables\Actions\EditAction::make()->label('تعديل'),
+        Tables\Actions\ViewAction::make()->label('عرض'),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }
 
   public static function getRelations(): array
   {
-    return [
-      //
-    ];
+    return [];
   }
 
   public static function getPages(): array

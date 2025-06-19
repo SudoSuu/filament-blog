@@ -13,6 +13,9 @@ class PostsRelationManager extends RelationManager
 {
   protected static string $relationship = 'posts';
 
+  protected static ?string $recordTitleAttribute = 'title';
+  protected static ?string $title = 'المقالات';
+
   public function isReadOnly(): bool
   {
     return false;
@@ -20,8 +23,7 @@ class PostsRelationManager extends RelationManager
 
   public function form(Form $form): Form
   {
-    return $form
-      ->schema(Post::getForm());
+    return $form->schema(Post::getForm());
   }
 
   public function table(Table $table): Table
@@ -30,29 +32,31 @@ class PostsRelationManager extends RelationManager
       ->recordTitleAttribute('title')
       ->columns([
         Tables\Columns\TextColumn::make('title')
+          ->label('العنوان')
           ->limit(40)
-          ->description(function (Post $record) {
-            return Str::limit($record->sub_title);
-          }),
+          ->description(fn(Post $record) => Str::limit($record->sub_title)),
+
         Tables\Columns\TextColumn::make('status')
+          ->label('الحالة')
           ->badge()
-          ->color(function ($state) {
-            return $state->getColor();
-          }),
+          ->color(fn($state) => $state->getColor()),
       ])
       ->filters([
-        //
+        // فلاتر يمكن إضافتها لاحقًا
       ])
       ->headerActions([
-        Tables\Actions\CreateAction::make(),
+        Tables\Actions\CreateAction::make()->label('إضافة'),
       ])
       ->actions([
-        Tables\Actions\EditAction::make()->slideOver(),
-        Tables\Actions\DeleteAction::make(),
+        Tables\Actions\EditAction::make()
+          ->label('تعديل')
+          ->slideOver(),
+
+        Tables\Actions\DeleteAction::make()->label('حذف'),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }

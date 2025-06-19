@@ -16,31 +16,27 @@ class ViewPost extends ViewRecord
   public function getTitle(): string|Htmlable
   {
     $record = $this->getRecord();
-
-    return $record->title;
+    return 'عرض المقال: ' . $record->title;
   }
 
   protected function getHeaderActions(): array
   {
     return [
       Action::make('sendNotification')
-        ->label('Send Notification')
+        ->label('إرسال إشعار')
         ->requiresConfirmation()
-        ->icon('heroicon-o-bell')->action(function (Post $record) {
+        ->icon('heroicon-o-bell')
+        ->action(function (Post $record) {
           event(new BlogPublished($record));
         })
-        ->disabled(function (Post $record) {
-          return $record->isNotPublished();
-        }),
+        ->disabled(fn(Post $record) => $record->isNotPublished()),
+
       Action::make('preview')
-        ->label('Preview')
+        ->label('معاينة')
         ->requiresConfirmation()
-        ->icon('heroicon-o-eye')->url(function (Post $record) {
-          return route('filamentblog.post.show', $record->slug);
-        }, true)
-        ->disabled(function (Post $record) {
-          return $record->isNotPublished();
-        }),
+        ->icon('heroicon-o-eye')
+        ->url(fn(Post $record) => route('filamentblog.post.show', $record->slug), true)
+        ->disabled(fn(Post $record) => $record->isNotPublished()),
     ];
   }
 }

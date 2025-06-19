@@ -138,11 +138,12 @@ class Post extends Model
   public static function getForm()
   {
     return [
-      Section::make('Blog Details')
+      Section::make('تفاصيل المقال')
         ->schema([
-          Fieldset::make('Titles')
+          Fieldset::make('العناوين')
             ->schema([
               Select::make('category_id')
+                ->label('التصنيفات')
                 ->multiple()
                 ->preload()
                 ->createOptionForm(Category::getForm())
@@ -151,6 +152,7 @@ class Post extends Model
                 ->columnSpanFull(),
 
               TextInput::make('title')
+                ->label('عنوان المقال')
                 ->live(true)
                 ->afterStateUpdated(fn(Set $set, ?string $state) => $set(
                   'slug',
@@ -161,13 +163,16 @@ class Post extends Model
                 ->maxLength(255),
 
               TextInput::make('slug')
+                ->label('الرابط (Slug)')
                 ->maxLength(255),
 
               Textarea::make('sub_title')
+                ->label('العنوان الفرعي')
                 ->maxLength(255)
                 ->columnSpanFull(),
 
               Select::make('tag_id')
+                ->label('الوسوم')
                 ->multiple()
                 ->preload()
                 ->createOptionForm(Tag::getForm())
@@ -175,54 +180,60 @@ class Post extends Model
                 ->relationship('tags', 'name')
                 ->columnSpanFull(),
             ]),
+
           TiptapEditor::make('body')
+            ->label('المحتوى')
             ->profile('default')
             ->disableFloatingMenus()
             ->extraInputAttributes(['style' => 'max-height: 30rem; min-height: 24rem'])
             ->required()
             ->columnSpanFull(),
-          Fieldset::make('Feature Image')
+
+          Fieldset::make('صورة الغلاف')
             ->schema([
               FileUpload::make('cover_photo_path')
-                ->label('Cover Photo')
+                ->label('صورة الغلاف')
                 ->directory('/blog-feature-images')
-                ->hint('This cover image is used in your blog post as a feature image. Recommended image size 1200 X 628')
+                ->hint('تُستخدم هذه الصورة كصورة رئيسية للمقال. الحجم الموصى به: 1200 × 628')
                 ->image()
                 ->preserveFilenames()
                 ->imageEditor()
                 ->maxSize(1024 * 5)
                 ->rules('dimensions:max_width=1920,max_height=1004')
                 ->required(),
-              TextInput::make('photo_alt_text')->required(),
-            ])->columns(1),
 
-          Fieldset::make('Status')
+              TextInput::make('photo_alt_text')
+                ->label('وصف الصورة البديل')
+                ->required(),
+            ])
+            ->columns(1),
+
+          Fieldset::make('الحالة')
             ->schema([
-
               ToggleButtons::make('status')
+                ->label('الحالة')
                 ->live()
                 ->inline()
                 ->options(PostStatus::class)
                 ->required(),
 
               DateTimePicker::make('scheduled_for')
-                ->visible(function ($get) {
-                  return $get('status') === PostStatus::SCHEDULED->value;
-                })
-                ->required(function ($get) {
-                  return $get('status') === PostStatus::SCHEDULED->value;
-                })
+                ->label('تاريخ النشر المجدوَل')
+                ->visible(fn($get) => $get('status') === PostStatus::SCHEDULED->value)
+                ->required(fn($get) => $get('status') === PostStatus::SCHEDULED->value)
                 ->minDate(now()->addMinutes(5))
                 ->native(false),
             ]),
+
           Select::make(config('filamentblog.user.foreign_key'))
+            ->label('الكاتب')
             ->relationship('user', config('filamentblog.user.columns.name'))
             ->nullable(false)
             ->default(auth()->id()),
-
         ]),
     ];
   }
+
 
   public function getTable()
   {

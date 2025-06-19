@@ -16,9 +16,12 @@ class CommentResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
-  protected static ?string $navigationGroup = 'Blog';
+  protected static ?string $navigationGroup = 'مدونة';
 
   protected static ?int $navigationSort = 5;
+
+  protected static ?string $label = 'تعليق';
+  protected static ?string $pluralLabel = 'التعليقات';
 
   public static function form(Form $form): Form
   {
@@ -31,39 +34,46 @@ class CommentResource extends Resource
     return $table
       ->columns([
         UserPhotoName::make('user')
-          ->label('User'),
+          ->label('المستخدم'),
+
         Tables\Columns\TextColumn::make('post.title')
+          ->label('عنوان المقال')
           ->numeric()
           ->limit(20)
           ->sortable(),
+
         Tables\Columns\TextColumn::make('comment')
+          ->label('التعليق')
           ->searchable()
           ->limit(20),
-        Tables\Columns\ToggleColumn::make('approved')
-          ->beforeStateUpdated(function ($record, $state) {
-            if ($state) {
-              $record->approved_at = now();
-            } else {
-              $record->approved_at = null;
-            }
 
+        Tables\Columns\ToggleColumn::make('approved')
+          ->label('تمت الموافقة')
+          ->beforeStateUpdated(function ($record, $state) {
+            $record->approved_at = $state ? now() : null;
             return $state;
           }),
+
         Tables\Columns\TextColumn::make('approved_at')
+          ->label('تاريخ الموافقة')
           ->sortable()
-          ->placeholder('Not approved yet'),
+          ->placeholder('لم تتم الموافقة بعد'),
 
         Tables\Columns\TextColumn::make('created_at')
+          ->label('تاريخ الإنشاء')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
+
         Tables\Columns\TextColumn::make('updated_at')
+          ->label('تاريخ التعديل')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
       ->filters([
         Tables\Filters\SelectFilter::make('user')
+          ->label('المستخدم')
           ->relationship('user', config('filamentblog.user.columns.name'))
           ->searchable()
           ->preload()
@@ -71,23 +81,21 @@ class CommentResource extends Resource
       ])
       ->actions([
         ActionGroup::make([
-          Tables\Actions\EditAction::make(),
-          Tables\Actions\DeleteAction::make(),
-          Tables\Actions\ViewAction::make(),
+          Tables\Actions\EditAction::make()->label('تعديل'),
+          Tables\Actions\DeleteAction::make()->label('حذف'),
+          Tables\Actions\ViewAction::make()->label('عرض'),
         ]),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }
 
   public static function getRelations(): array
   {
-    return [
-      //
-    ];
+    return [];
   }
 
   public static function getPages(): array

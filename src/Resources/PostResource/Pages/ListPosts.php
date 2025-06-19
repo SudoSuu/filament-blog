@@ -15,7 +15,7 @@ class ListPosts extends ListRecords
   protected function getHeaderActions(): array
   {
     return [
-      Actions\CreateAction::make(),
+      Actions\CreateAction::make()->label('إضافة مقال'),
     ];
   }
 
@@ -29,20 +29,18 @@ class ListPosts extends ListRecords
   public function getTabs(): array
   {
     return [
-      'all' => Tab::make('All'),
-      'published' => Tab::make('Published')
-        ->modifyQueryUsing(function ($query) {
-          $query->published();
-        })->icon('heroicon-o-check-badge'),
-      'pending' => Tab::make('Pending')
-        ->modifyQueryUsing(function ($query) {
-          $query->pending();
-        })
+      'all' => Tab::make('الكل'),
+
+      'published' => Tab::make('منشور')
+        ->modifyQueryUsing(fn($query) => $query->published())
+        ->icon('heroicon-o-check-badge'),
+
+      'pending' => Tab::make('مسودة')
+        ->modifyQueryUsing(fn($query) => $query->pending())
         ->icon('heroicon-o-clock'),
-      'scheduled' => Tab::make('Scheduled')
-        ->modifyQueryUsing(function ($query) {
-          $query->scheduled();
-        })
+
+      'scheduled' => Tab::make('مجدوَل')
+        ->modifyQueryUsing(fn($query) => $query->scheduled())
         ->icon('heroicon-o-calendar-days'),
     ];
   }

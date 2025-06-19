@@ -15,11 +15,6 @@ class Comment extends Model
 {
   use HasFactory;
 
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
   protected $fillable = [
     'user_id',
     'post_id',
@@ -28,11 +23,6 @@ class Comment extends Model
     'approved_at',
   ];
 
-  /**
-   * The attributes that should be cast to native types.
-   *
-   * @var array
-   */
   protected $casts = [
     'id' => 'integer',
     'user_id' => 'integer',
@@ -65,16 +55,23 @@ class Comment extends Model
   {
     return [
       Select::make('user_id')
+        ->label('المستخدم')
         ->relationship('user', config('filamentblog.user.columns.name'))
         ->required(),
+
       Select::make('post_id')
+        ->label('المقال')
         ->relationship('post', 'title')
         ->required(),
+
       Textarea::make('comment')
+        ->label('التعليق')
         ->required()
         ->maxLength(65535)
         ->columnSpanFull(),
-      Toggle::make('approved'),
+
+      Toggle::make('approved')
+        ->label('تمت الموافقة'),
     ];
   }
 

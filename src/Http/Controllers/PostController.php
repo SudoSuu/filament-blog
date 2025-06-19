@@ -13,7 +13,7 @@ class PostController extends Controller
 {
   public function index(Request $request)
   {
-    SEOMeta::setTitle('Blog | ' . config('app.name'));
+    SEOMeta::setTitle('المدونة | ' . config('app.name'));
 
     $posts = Post::query()->with(['categories', 'user', 'tags'])
       ->published()
@@ -26,7 +26,7 @@ class PostController extends Controller
 
   public function allPosts()
   {
-    SEOMeta::setTitle('All posts | ' . config('app.name'));
+    SEOMeta::setTitle('كل المقالات | ' . config('app.name'));
 
     $posts = Post::query()->with(['categories', 'user'])
       ->published()
@@ -39,33 +39,41 @@ class PostController extends Controller
 
   public function search(Request $request)
   {
-    SEOMeta::setTitle('Search result for ' . $request->get('query'));
+    $query = $request->get('query');
+    SEOMeta::setTitle('نتائج البحث عن: ' . $query);
 
     $request->validate([
       'query' => 'required',
     ]);
+
     $searchedPosts = Post::query()
       ->with(['categories', 'user'])
       ->published()
-      ->whereAny(['title', 'sub_title'], 'like', '%' . $request->get('query') . '%')
-      ->paginate(10)->withQueryString();
+      ->whereAny(['title', 'sub_title'], 'like', '%' . $query . '%')
+      ->paginate(10)
+      ->withQueryString();
 
     return view('filament-blog::blogs.search', [
       'posts' => $searchedPosts,
-      'searchMessage' => 'Search result for ' . $request->get('query'),
+      'searchMessage' => 'نتائج البحث عن: ' . $query,
     ]);
   }
 
   public function show(Post $post)
   {
-    SEOMeta::setTitle($post->seoDetail?->title);
-
+    SEOMeta::setTitle($post->seoDetail?->title ?? $post->title);
     SEOMeta::setDescription($post->seoDetail?->description);
-
     SEOMeta::setKeywords($post->seoDetail->keywords ?? []);
 
     $shareButton = ShareSnippet::query()->active()->first();
-    $post->load(['user', 'categories', 'tags', 'comments' => fn($query) => $query->approved(), 'comments.user']);
+
+    $post->load([
+      'user',
+      'categories',
+      'tags',
+      'comments' => fn($query) => $query->approved(),
+      'comments.user',
+    ]);
 
     return view('filament-blog::blogs.show', [
       'post' => $post,
@@ -79,16 +87,16 @@ class PostController extends Controller
       'email' => [
         'required',
         'email',
-        Rule::unique(NewsLetter::class, 'email')
+        Rule::unique(NewsLetter::class, 'email'),
       ],
     ], [
-      'email.unique' => 'You have already subscribed',
+      'email.unique' => 'لقد قمت بالاشتراك بالفعل.',
     ]);
 
     NewsLetter::create([
       'email' => $request->email,
     ]);
 
-    return back()->with('success', 'You have successfully subscribed to our news letter');
+    return back()->with('success', 'تم الاشتراك بنجاح في النشرة البريدية.');
   }
 }

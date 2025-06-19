@@ -14,9 +14,12 @@ class SeoDetailResource extends Resource
 
   protected static ?string $navigationIcon = 'heroicon-o-document-magnifying-glass';
 
-  protected static ?string $navigationGroup = 'Blog';
+  protected static ?string $navigationGroup = 'مدونة';
 
   protected static ?int $navigationSort = 4;
+
+  protected static ?string $label = 'تفاصيل السيو';
+  protected static ?string $pluralLabel = 'تفاصيل السيو';
 
   public static function form(Form $form): Form
   {
@@ -30,40 +33,48 @@ class SeoDetailResource extends Resource
       ->striped()
       ->columns([
         Tables\Columns\TextColumn::make('post.title')
+          ->label('عنوان المقال')
           ->limit(20),
+
         Tables\Columns\TextColumn::make('title')
+          ->label('عنوان السيو')
           ->limit(20)
           ->searchable(),
-        Tables\Columns\TextColumn::make('keywords')->badge()
+
+        Tables\Columns\TextColumn::make('keywords')
+          ->label('الكلمات المفتاحية')
+          ->badge()
           ->searchable(),
+
         Tables\Columns\TextColumn::make('created_at')
+          ->label('تاريخ الإنشاء')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
+
         Tables\Columns\TextColumn::make('updated_at')
+          ->label('تاريخ التعديل')
           ->dateTime()
           ->sortable()
           ->toggleable(isToggledHiddenByDefault: true),
       ])
       ->defaultSort('id', 'desc')
       ->filters([
-        //
+        // يمكن إضافة فلاتر هنا
       ])
       ->actions([
-        Tables\Actions\EditAction::make(),
+        Tables\Actions\EditAction::make()->label('تعديل'),
       ])
       ->bulkActions([
         Tables\Actions\BulkActionGroup::make([
-          Tables\Actions\DeleteBulkAction::make(),
+          Tables\Actions\DeleteBulkAction::make()->label('حذف المحدد'),
         ]),
       ]);
   }
 
   public static function getRelations(): array
   {
-    return [
-      //
-    ];
+    return [];
   }
 
   public static function getPages(): array
