@@ -24,7 +24,7 @@ class Blog implements Plugin
       Resources\PostResource::class,
       Resources\TagResource::class,
       Resources\SeoDetailResource::class,
-      Resources\NewsletterResource::class,
+        // Resources\NewsletterResource::class,
       Resources\CommentResource::class,
       Resources\ShareSnippetResource::class,
       Resources\SettingResource::class,
