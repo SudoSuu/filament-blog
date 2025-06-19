@@ -22,7 +22,7 @@ class TagFactory extends Factory
   {
     return [
       'name' => $name = $this->faker->word(),
-      'slug' => Str::slug($name),
+      'slug' => Str::slug($name, '-', 'ar'),
     ];
   }
 }

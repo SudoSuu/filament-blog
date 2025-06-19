@@ -37,7 +37,7 @@ class Tag extends Model
         ->live(true)
         ->afterStateUpdated(fn(Set $set, ?string $state) => $set(
           'slug',
-          Str::slug($state)
+          Str::slug($state, '-', 'ar')
         ))
         ->unique(config('filamentblog.tables.prefix') . 'tags', 'name', null, 'id')
         ->required()

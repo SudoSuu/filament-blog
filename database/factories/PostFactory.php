@@ -25,7 +25,7 @@ class PostFactory extends Factory
   {
     return [
       'title' => $title = $this->faker->sentence(4),
-      'slug' => Str::slug($title),
+      'slug' => Str::slug($title, '-', 'ar'),
       'sub_title' => $this->faker->word(),
       'body' => $this->faker->text(),
       'status' => PostStatus::PENDING,

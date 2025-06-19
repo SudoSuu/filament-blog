@@ -2,26 +2,27 @@
 
 namespace SudoSuu\FilamentBlog\Models;
 
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use FilamentTiptapEditor\TiptapEditor;
-use SudoSuu\FilamentBlog\Database\Factories\PostFactory;
-use SudoSuu\FilamentBlog\Enums\PostStatus;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
+use FilamentTiptapEditor\TiptapEditor;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Textarea;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Illuminate\Database\Eloquent\Builder;
+use SudoSuu\FilamentBlog\Enums\PostStatus;
+use Filament\Forms\Components\ToggleButtons;
+use FilamentTiptapEditor\Enums\TiptapOutput;
+use Filament\Forms\Components\DateTimePicker;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use SudoSuu\FilamentBlog\Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
@@ -156,7 +157,7 @@ class Post extends Model
                 ->live(true)
                 ->afterStateUpdated(fn(Set $set, ?string $state) => $set(
                   'slug',
-                  Str::slug($state)
+                  Str::slug($state, '-', 'ar')
                 ))
                 ->required()
                 ->unique(config('filamentblog.tables.prefix') . 'posts', 'title', null, 'id')
@@ -182,6 +183,7 @@ class Post extends Model
             ]),
 
           TiptapEditor::make('body')
+
             ->label('المحتوى')
             ->profile('default')
             ->disableFloatingMenus()
