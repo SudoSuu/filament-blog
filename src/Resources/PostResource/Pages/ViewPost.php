@@ -13,6 +13,9 @@ class ViewPost extends ViewRecord
 {
   protected static string $resource = PostResource::class;
 
+
+  protected static ?string $title = 'عرض المقال';
+
   public function getTitle(): string|Htmlable
   {
     $record = $this->getRecord();

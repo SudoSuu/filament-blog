@@ -11,6 +11,8 @@ class EditPost extends EditRecord
 {
   protected static string $resource = PostResource::class;
 
+  protected static ?string $title = 'تعديل المقال';
+
   protected function getHeaderActions(): array
   {
     return [
