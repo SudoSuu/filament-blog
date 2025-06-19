@@ -24,9 +24,9 @@ enum PostStatus: string implements HasColor, HasIcon, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::PENDING => 'Pending',
-            self::SCHEDULED => 'Scheduled',
-            self::PUBLISHED => 'Published'
+            self::PENDING => 'مسودة',
+            self::SCHEDULED => 'مجدول',
+            self::PUBLISHED => 'منشور'
         };
     }
 
