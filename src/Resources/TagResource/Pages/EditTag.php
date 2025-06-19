@@ -1,19 +1,19 @@
 <?php
 
-namespace Firefly\FilamentBlog\Resources\TagResource\Pages;
+namespace SudoSuu\FilamentBlog\Resources\TagResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use Firefly\FilamentBlog\Resources\TagResource;
+use SudoSuu\FilamentBlog\Resources\TagResource;
 
 class EditTag extends EditRecord
 {
-    protected static string $resource = TagResource::class;
+  protected static string $resource = TagResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\DeleteAction::make(),
-        ];
-    }
+  protected function getHeaderActions(): array
+  {
+    return [
+      Actions\DeleteAction::make(),
+    ];
+  }
 }

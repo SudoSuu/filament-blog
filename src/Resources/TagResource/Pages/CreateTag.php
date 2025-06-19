@@ -1,11 +1,11 @@
 <?php
 
-namespace Firefly\FilamentBlog\Resources\TagResource\Pages;
+namespace SudoSuu\FilamentBlog\Resources\TagResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use Firefly\FilamentBlog\Resources\TagResource;
+use SudoSuu\FilamentBlog\Resources\TagResource;
 
 class CreateTag extends CreateRecord
 {
-    protected static string $resource = TagResource::class;
+  protected static string $resource = TagResource::class;
 }

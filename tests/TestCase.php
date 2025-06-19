@@ -1,16 +1,16 @@
 <?php
 
-namespace Firefly\FilamentBlog\Tests;
+namespace SudoSuu\FilamentBlog\Tests;
 
-use Firefly\FilamentBlog\FilamentBlogServiceProvider;
+use SudoSuu\FilamentBlog\FilamentBlogServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {
-    protected function getPackageProviders($app)
-    {
-        return [
-            FilamentBlogServiceProvider::class,
-        ];
-    }
+  protected function getPackageProviders($app)
+  {
+    return [
+      FilamentBlogServiceProvider::class,
+    ];
+  }
 }

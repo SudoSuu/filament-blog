@@ -1,16 +1,16 @@
 <?php
 
-namespace Firefly\FilamentBlog\Components;
+namespace SudoSuu\FilamentBlog\Components;
 
 use Illuminate\View\Component;
 
 class Comment extends Component
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function render()
-    {
-        return view('filament-blog::components.comment');
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public function render()
+  {
+    return view('filament-blog::components.comment');
+  }
 }

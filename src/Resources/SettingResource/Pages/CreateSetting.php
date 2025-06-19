@@ -1,15 +1,15 @@
 <?php
 
-namespace Firefly\FilamentBlog\Resources\SettingResource\Pages;
+namespace SudoSuu\FilamentBlog\Resources\SettingResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use Firefly\FilamentBlog\Resources\SettingResource;
+use SudoSuu\FilamentBlog\Resources\SettingResource;
 
 class CreateSetting extends CreateRecord
 {
-    protected static string $resource = SettingResource::class;
+  protected static string $resource = SettingResource::class;
 
-//    protected function beforeCreate(): void
+  //    protected function beforeCreate(): void
 //    {
 //        dd($this->data);
 //    }

@@ -1,16 +1,16 @@
 <?php
 
-namespace Firefly\FilamentBlog\Components;
+namespace SudoSuu\FilamentBlog\Components;
 
 use Illuminate\View\Component;
 
 class Header extends Component
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function render()
-    {
-        return view('filament-blog::components.header');
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public function render()
+  {
+    return view('filament-blog::components.header');
+  }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Firefly\FilamentBlog\Mails;
+namespace SudoSuu\FilamentBlog\Mails;
 
-use Firefly\FilamentBlog\Exceptions\CannotSendEmail;
-use Firefly\FilamentBlog\Models\Post;
+use SudoSuu\FilamentBlog\Exceptions\CannotSendEmail;
+use SudoSuu\FilamentBlog\Models\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -12,33 +12,34 @@ use Illuminate\Queue\SerializesModels;
 
 class BlogPublished extends Mailable
 {
-    use Queueable, SerializesModels;
+  use Queueable, SerializesModels;
 
-    public function __construct(private Post $post, private string $toEamil = '')
-    {
+  public function __construct(private Post $post, private string $toEamil = '')
+  {
 
+  }
+
+  /**
+   * Get the message envelope.
+   */
+  public function envelope(): Envelope
+  {
+    if ($this->post->isNotPublished()) {
+      throw CannotSendEmail::postNotPublished();
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        if ($this->post->isNotPublished()) {
-            throw CannotSendEmail::postNotPublished();
-        }
+    return new Envelope(
+      to: $this->toEamil,
+      subject: 'New Purchase Mail'
+    );
 
-        return new Envelope(
-            to: $this->toEamil,
-            subject: 'New Purchase Mail'
-        );
+  }
 
-    }
-
-    public function content(): Content
-    {
-        return new Content(
-            view: 'filament-blog::mails.blog-published',
-            with: ['post' => $this->post]);
-    }
+  public function content(): Content
+  {
+    return new Content(
+      view: 'filament-blog::mails.blog-published',
+      with: ['post' => $this->post]
+    );
+  }
 }

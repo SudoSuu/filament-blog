@@ -1,6 +1,6 @@
 <?php
 
-namespace Firefly\FilamentBlog\Enums;
+namespace SudoSuu\FilamentBlog\Enums;
 
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasIcon;

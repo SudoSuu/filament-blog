@@ -1,10 +1,10 @@
 <?php
 
-namespace Firefly\FilamentBlog\Tables\Columns;
+namespace SudoSuu\FilamentBlog\Tables\Columns;
 
 use Filament\Tables\Columns\Column;
 
 class UserPhotoName extends Column
 {
-    protected string $view = 'filament-blog::tables.columns.user-photo-name';
+  protected string $view = 'filament-blog::tables.columns.user-photo-name';
 }

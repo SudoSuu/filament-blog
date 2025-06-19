@@ -1,16 +1,16 @@
 <?php
 
-namespace Firefly\FilamentBlog\Components;
+namespace SudoSuu\FilamentBlog\Components;
 
-use Firefly\FilamentBlog\Models\Setting;
+use SudoSuu\FilamentBlog\Models\Setting;
 use Illuminate\View\Component;
 
 class Layout extends Component
 {
-    public function render()
-    {
-        $setting = Setting::first();
+  public function render()
+  {
+    $setting = Setting::first();
 
-        return view('filament-blog::layouts.app', ['setting' => $setting]);
-    }
+    return view('filament-blog::layouts.app', ['setting' => $setting]);
+  }
 }

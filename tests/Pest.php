@@ -11,7 +11,7 @@
 |
 */
 
-use Firefly\FilamentBlog\Tests\TestCase;
+use SudoSuu\FilamentBlog\Tests\TestCase;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
 uses(TestCase::class, LazilyRefreshDatabase::class)->in('Feature');
@@ -28,7 +28,7 @@ uses(TestCase::class, LazilyRefreshDatabase::class)->in('Feature');
 */
 
 expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
+  return $this->toBe(1);
 });
 
 /*
@@ -44,7 +44,7 @@ expect()->extend('toBeOne', function () {
 
 function setSettingData()
 {
-    \Firefly\FilamentBlog\Models\Setting::factory()->create();
+  \SudoSuu\FilamentBlog\Models\Setting::factory()->create();
 }
 
 

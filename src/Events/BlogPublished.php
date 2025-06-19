@@ -1,18 +1,18 @@
 <?php
 
-namespace Firefly\FilamentBlog\Events;
+namespace SudoSuu\FilamentBlog\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class BlogPublished
 {
-    use Dispatchable, SerializesModels;
+  use Dispatchable, SerializesModels;
 
-    public mixed $post;
+  public mixed $post;
 
-    public function __construct($post)
-    {
-        $this->post = $post;
-    }
+  public function __construct($post)
+  {
+    $this->post = $post;
+  }
 }

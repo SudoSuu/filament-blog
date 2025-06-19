@@ -1,20 +1,20 @@
 <?php
 
-namespace Firefly\FilamentBlog\Resources\CommentResource\Pages;
+namespace SudoSuu\FilamentBlog\Resources\CommentResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use Firefly\FilamentBlog\Resources\CommentResource;
+use SudoSuu\FilamentBlog\Resources\CommentResource;
 
 class EditComment extends EditRecord
 {
-    protected static string $resource = CommentResource::class;
+  protected static string $resource = CommentResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\DeleteAction::make(),
-        ];
-    }
+  protected function getHeaderActions(): array
+  {
+    return [
+      Actions\DeleteAction::make(),
+    ];
+  }
 
 }

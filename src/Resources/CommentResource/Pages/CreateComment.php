@@ -1,11 +1,11 @@
 <?php
 
-namespace Firefly\FilamentBlog\Resources\CommentResource\Pages;
+namespace SudoSuu\FilamentBlog\Resources\CommentResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use Firefly\FilamentBlog\Resources\CommentResource;
+use SudoSuu\FilamentBlog\Resources\CommentResource;
 
 class CreateComment extends CreateRecord
 {
-    protected static string $resource = CommentResource::class;
+  protected static string $resource = CommentResource::class;
 }

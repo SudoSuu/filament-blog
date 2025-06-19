@@ -1,19 +1,19 @@
 {
-    "name": "firefly/filament-blog",
+    "name": "sudosuu/filament-blog",
     "type": "library",
     "description": "An advance blog package for Filament Admin Panel",
     "keywords": [
         "filament",
         "laravel",
         "blog",
-        "firefly"
+        "sudosuu"
     ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Asmit Nepali",
-            "email": "asmit@thefireflytech.com",
-            "homepage": "https://github.com/asmit-firefly",
+            "name": "Sudo Su",
+            "email": "alherbi@outlook.com",
+            "homepage": "https://github.com/SudoSuu",
             "role": "Developer"
         }
     ],
@@ -24,19 +24,19 @@
     },
     "autoload": {
         "psr-4": {
-            "Firefly\\FilamentBlog\\": "src/",
-            "Firefly\\FilamentBlog\\Database\\Factories\\": "database/factories/"
+            "SudoSuu\\FilamentBlog\\": "src/",
+            "SudoSuu\\FilamentBlog\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Firefly\\FilamentBlog\\Tests\\": "tests"
+            "SudoSuu\\FilamentBlog\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Firefly\\FilamentBlog\\FilamentBlogServiceProvider"
+                "SudoSuu\\FilamentBlog\\FilamentBlogServiceProvider"
             ]
         }
     },

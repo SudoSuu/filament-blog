@@ -1,17 +1,17 @@
 <?php
 
-use Firefly\FilamentBlog\Models\Post;
-use Firefly\FilamentBlog\Models\Tag;
+use SudoSuu\FilamentBlog\Models\Post;
+use SudoSuu\FilamentBlog\Models\Tag;
 
 it('has posts', function () {
-    // Arrange
-    $tag = Tag::factory()
-        ->hasAttached(Post::factory()->count(3))
-        ->create();
+  // Arrange
+  $tag = Tag::factory()
+    ->hasAttached(Post::factory()->count(3))
+    ->create();
 
-    // Act & Assert
-    expect($tag->posts)
-        ->toHaveCount(3)
-        ->each
-        ->toBeInstanceOf(Post::class);
+  // Act & Assert
+  expect($tag->posts)
+    ->toHaveCount(3)
+    ->each
+    ->toBeInstanceOf(Post::class);
 });

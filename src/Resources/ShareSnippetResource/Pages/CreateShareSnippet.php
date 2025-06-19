@@ -1,11 +1,11 @@
 <?php
 
-namespace Firefly\FilamentBlog\Resources\ShareSnippetResource\Pages;
+namespace SudoSuu\FilamentBlog\Resources\ShareSnippetResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use Firefly\FilamentBlog\Resources\ShareSnippetResource;
+use SudoSuu\FilamentBlog\Resources\ShareSnippetResource;
 
 class CreateShareSnippet extends CreateRecord
 {
-    protected static string $resource = ShareSnippetResource::class;
+  protected static string $resource = ShareSnippetResource::class;
 }

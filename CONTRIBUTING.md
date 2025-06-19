@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions are welcome and will be fully credited. Please read and understand the contribution guide before creating an issue or pull request. Contributions are accepted via Pull Requests on [Github](https://github.com/thefireflytech/filament-blog).
+Contributions are welcome and will be fully credited. Please read and understand the contribution guide before creating an issue or pull request. Contributions are accepted via Pull Requests on [Github](https://github.com/theSudoSuutech/filament-blog).
 
 ### Etiquette
 This project is open source, and as such, the maintainers give their free time to build and maintain the source code held within. They make the code freely available in the hope that it will be of use to other developers. It would be extremely unfair for them to suffer abuse or anger for their hard work.
@@ -15,7 +15,7 @@ When requesting or submitting new features, first consider whether it might be u
 ## Issues
 Issue reports are warmly welcomed, as we know it's important aspect of open source software. Whether it's a bug or a possible enhancement, We are aware that it will improve and build trust among the community. Before filing an issue, please consider the following things.
 
-- You can add an issue in the [issues section](https://github.com/thefireflytech/filament-blog/issues)
+- You can add an issue in the [issues section](https://github.com/theSudoSuutech/filament-blog/issues)
 - Make sure the same issue is not reported by any other person.
 - Add a decent title and sufficient description of the issue, you may also add some screenshots.
 - Please consider adding label to issue that allows us to understand nature of the issue.

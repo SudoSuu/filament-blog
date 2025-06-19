@@ -1,13 +1,13 @@
 <?php
 
-namespace Firefly\FilamentBlog\Components;
+namespace SudoSuu\FilamentBlog\Components;
 
 use Illuminate\View\Component;
 
 class Card extends Component
 {
-    public function render()
-    {
-        return view('filament-blog::components.card');
-    }
+  public function render()
+  {
+    return view('filament-blog::components.card');
+  }
 }

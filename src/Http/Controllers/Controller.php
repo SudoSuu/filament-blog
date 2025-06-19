@@ -1,6 +1,6 @@
 <?php
 
-namespace Firefly\FilamentBlog\Http\Controllers;
+namespace SudoSuu\FilamentBlog\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 

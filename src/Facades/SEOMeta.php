@@ -1,13 +1,13 @@
 <?php
 
-namespace Firefly\FilamentBlog\Facades;
+namespace SudoSuu\FilamentBlog\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 class SEOMeta extends Facade
 {
-    protected static function getFacadeAccessor()
-    {
-        return 'seometa';
-    }
+  protected static function getFacadeAccessor()
+  {
+    return 'seometa';
+  }
 }
