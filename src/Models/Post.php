@@ -157,7 +157,7 @@ class Post extends Model
                 ->live(true)
                 ->afterStateUpdated(fn(Set $set, ?string $state) => $set(
                   'slug',
-                  Str::slug($state, '-', 'ar')
+                  Str::replace(' ', '-', $state)
                 ))
                 ->required()
                 ->unique(config('filamentblog.tables.prefix') . 'posts', 'title', null, 'id')

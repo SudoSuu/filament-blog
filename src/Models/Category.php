@@ -39,7 +39,7 @@ class Category extends Model
         ->label('اسم التصنيف')
         ->live(true)
         ->afterStateUpdated(function (Get $get, Set $set, ?string $operation, ?string $old, ?string $state) {
-          $set('slug', Str::slug($state, '-', 'ar'));
+          $set('slug', Str::replace(' ', '-', $state));
         })
         ->unique(config('filamentblog.tables.prefix') . 'categories', 'name', null, 'id')
         ->required()
